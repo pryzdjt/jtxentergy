@@ -22,7 +22,7 @@ import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
 
 const WARM_COLORS = {
-  Total: "url(#totalGradientSummer)",
+  // Total: "url(#totalGradientSummer)",
   Coal: "#E53935",
   Gas: "#FB8C00",
   Wind: "#FDD835",
@@ -31,7 +31,7 @@ const WARM_COLORS = {
 };
 
 const COOL_COLORS = {
-  Total: "url(#totalGradientWinter)",
+  // Total: "url(#totalGradientWinter)",
   Coal: "#1976D2",
   Gas: "#26C6DA",
   Wind: "#66BB6A",
@@ -39,11 +39,12 @@ const COOL_COLORS = {
   Nuclear: "#5C6BC0"
 };
 
-const ALL_SOURCES = ["Total", "Coal", "Gas", "Wind", "Solar", "Nuclear"];
+// const ALL_SOURCES = ["Total", "Coal", "Gas", "Wind", "Solar", "Nuclear"];
+const ALL_SOURCES = ["Coal", "Gas", "Wind", "Solar", "Nuclear"]; // Commented out Total
 
 export default function Chart6SeasonalTabs() {
   const [data, setData] = useState([]);
-  const [selectedSources, setSelectedSources] = useState(["Total"]);
+  const [selectedSources, setSelectedSources] = useState(["Coal", "Gas", "Wind", "Solar", "Nuclear"]); // Default to all sources
   const [tab, setTab] = useState(0);
 
   useEffect(() => {
@@ -61,7 +62,8 @@ export default function Chart6SeasonalTabs() {
             Solar: parseFloat(row.Solar?.replace(/,/g, "")) || 0,
             Nuclear: parseFloat(row.Nuclear?.replace(/,/g, "")) || 0
           };
-          return { ...base, Total: base.Coal + base.Gas + base.Wind + base.Solar + base.Nuclear };
+          // return { ...base, Total: base.Coal + base.Gas + base.Wind + base.Solar + base.Nuclear };
+          return base; // Removed Total calculation since it's no longer needed
         });
         setData(parsed);
       }
@@ -87,7 +89,7 @@ export default function Chart6SeasonalTabs() {
 
   const toggleAll = () => {
     if (selectedSources.length === ALL_SOURCES.length) {
-      setSelectedSources(["Total"]);
+      setSelectedSources([]);
     } else {
       setSelectedSources([...ALL_SOURCES]);
     }
@@ -102,14 +104,14 @@ export default function Chart6SeasonalTabs() {
     <>
       <svg width="0" height="0">
         <defs>
-          <linearGradient id="totalGradientWinter" x1="0" y1="0" x2="0" y2="1">
+          {/* <linearGradient id="totalGradientWinter" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#0D47A1" stopOpacity={0.8} />
             <stop offset="100%" stopColor="#E53935" stopOpacity={0.6} />
           </linearGradient>
           <linearGradient id="totalGradientSummer" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#E53935" stopOpacity={0.8} />
             <stop offset="100%" stopColor="#0D47A1" stopOpacity={0.6} />
-          </linearGradient>
+          </linearGradient> */}
         </defs>
       </svg>
 
@@ -138,10 +140,7 @@ export default function Chart6SeasonalTabs() {
             <XAxis dataKey="label" tickFormatter={customTick} />
             <YAxis tickFormatter={(v) => (v / 1_000_000).toFixed(1) + "M"} />
             <Tooltip
-              formatter={(v, name, props) => {
-                const pct = ((v / props.payload.Total) * 100).toFixed(1) + "%";
-                return [`${v.toLocaleString()} MWh`, `${name} (${pct})`];
-              }}
+              formatter={(v, name) => [`${v.toLocaleString()} MWh`, name]}
             />
             <Legend />
             {selectedSources.map((key) => (
@@ -162,10 +161,7 @@ export default function Chart6SeasonalTabs() {
             <XAxis dataKey="label" tickFormatter={customTick} />
             <YAxis tickFormatter={(v) => (v / 1_000_000).toFixed(1) + "M"} />
             <Tooltip
-              formatter={(v, name, props) => {
-                const pct = ((v / props.payload.Total) * 100).toFixed(1) + "%";
-                return [`${v.toLocaleString()} MWh`, `${name} (${pct})`];
-              }}
+              formatter={(v, name) => [`${v.toLocaleString()} MWh`, name]}
             />
             <Legend />
             {selectedSources.map((key) => (
@@ -185,6 +181,7 @@ export default function Chart6SeasonalTabs() {
   return (
     <Box>
       <Typography variant="h6" mb={1}>Chart 6 – Seasonal Electricity Generation</Typography>
+      <p>Solar drops in winter (e.g., 1,400,000 MWh in Q4 2023), while Gas dominates (e.g., 18,000,000 MWh) and Wind slightly rises.</p>
       <Tabs value={tab} onChange={(_, val) => setTab(val)}>
         <Tab label="Winter (Q4 → Q1)" />
         <Tab label="Summer (Q2 → Q3)" />

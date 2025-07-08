@@ -1,0 +1,25 @@
+, Create one graph and show a range where the average is converging (i.e. arithmetic mean of all forecasts +-10%),,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,Energy Consumption (TWh),,,,,,,,,,,,,,,,
+,Year,LBNL,LBNL,LBNL,IEA 2024,BCG,BCG,EPRI,EPRI,EPRI,EPRI,EPRI,Jefferies,Goldman Sachs,McKinsey,S&P Global,IEA 2025,BNEF
+,,Historical,Low,High,Base,Low,High,Historical,Low,Moderate,High,Higher,Base,Base,Base,Base,Base,Base
+,,LBNL historical,LBNL low,LBNL high,IEA,BCG low,BCG,EPRI historical,EPRI low,EPRI moderate,EPRI high,EPRI higher,Jeffries,Goldman Sachs,McKinsey,S&P,IEA ,BNEF
+,2014,64,,,,,,,,,,,,,,,,29
+,2015,68,,,,,,,,,,,,,,,,33
+,2016,70,,,,,,,,,,,75,75,,,,37
+,2017,75,,,,,,,,,,,82,74,,,,44
+,2018,84,,,,,,,,,,,100,74,,,,49
+,2019,95,,,,,,,,,,,97,75,,,,56
+,2020,109,,,,,,85,,,,,119,75,,,114,69
+,2021,145,,,,,,,,,,,130,90,,,129,85
+,2022,184,184,184,199,,,,,,,,145,108,,,145,103
+,2023,,195,214,,,,120,,,,,197,128,152,,164,118
+,2024,,224,264,,329,330,120,,,,,252,150,182,285,195,146
+,2025,,254,324,,354,404,,165,168,175,183,286,181,228,347,264,180
+,2026,,285,405,262,429,480,,171,175,192,210,334,214,296,410,305,214
+,2027,,304,485,,504,579,,177,184,211,240,382,252,375,472,355,244
+,2028,,330,579,,629,704,,183,193,232,276,437,288,455,534,395,275
+,2029,,,,,529,854,,190,202,254,316,470,327,518,,425,301
+,2030,,,,,804,1055,,201,218,301,408,534,366,610,,435,327
+,Source,Lawrence Berkeley National Lab (LBNL) ,,,International Energy Agency (IEA) ,Boston Consulting Group (BCG) ,,Electric Power Research Institute (EPRI) ,,,,,Jefferies,Goldman Sachs,McKinsey,S&P,IEA,

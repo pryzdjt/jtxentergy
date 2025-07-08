@@ -16,6 +16,7 @@
     "@emotion/styled": "^11.14.1",
     "@mui/material": "^7.2.0",
     "papaparse": "^5.5.3",
+    "react-papaparse": "^4.4.0",
     "recharts": "^3.0.2"
   }
 }

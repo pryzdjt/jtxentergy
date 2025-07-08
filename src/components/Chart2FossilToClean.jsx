@@ -60,11 +60,11 @@ export default function Chart2FossilToClean() {
             const total = row.Coal + row.Gas + row.Nuclear + row.Solar + row.Wind;
             return {
               year: row.Year,
-              coal: row.Coal,
-              gas: row.Gas,
-              nuclear: row.Nuclear,
-              solar: row.Solar,
-              wind: row.Wind,
+              coal: row.Coal / 1_000_000, // Convert to TWh
+              gas: row.Gas / 1_000_000,
+              nuclear: row.Nuclear / 1_000_000,
+              solar: row.Solar / 1_000_000,
+              wind: row.Wind / 1_000_000,
               coal_pct: row.Coal / total,
               gas_pct: row.Gas / total,
               nuclear_pct: row.Nuclear / total,
@@ -92,6 +92,7 @@ export default function Chart2FossilToClean() {
       <Typography variant="h6" mb={1}>
         Chart 2 – Fossil to Clean Electricity Mix
       </Typography>
+      <p>Coal declines to ~28.8 TWh in 2023, while clean energy nears 40% by 2024, driven by Solar and Wind growth.</p>
 
       <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 1 }}>
         <ToggleButtonGroup
@@ -100,10 +101,9 @@ export default function Chart2FossilToClean() {
           onChange={(e, val) => val && setMode(val)}
           size="small"
         >
-          <ToggleButton value="mwh">MWh</ToggleButton>
+          <ToggleButton value="mwh">TWh</ToggleButton>
           <ToggleButton value="percent">% Share</ToggleButton>
         </ToggleButtonGroup>
-
       </Box>
 
       <ResponsiveContainer width="100%" height={400}>
@@ -115,64 +115,70 @@ export default function Chart2FossilToClean() {
           <XAxis dataKey="year" />
           <YAxis
             tickFormatter={(v) =>
-              mode === "mwh" ? `${(v / 1_000_000).toFixed(0)}M` : `${(v * 100).toFixed(0)}%`
+              mode === "mwh" ? `${v.toFixed(1)} TWh` : `${(v * 100).toFixed(0)}%`
             }
             domain={mode === "mwh" ? [0, "auto"] : [0, 1]}
           />
 
-<Tooltip
-  content={({ payload, label }) => {
-    if (!payload || !payload.length) return null;
+          <Tooltip
+            content={({ payload, label }) => {
+              if (!payload || !payload.length) return null;
 
-    const fossil = ["coal", "gas", "coal_pct", "gas_pct"];
-    const clean = ["nuclear", "solar", "wind", "nuclear_pct", "solar_pct", "wind_pct"];
+              const fossil = ["coal", "gas", "coal_pct", "gas_pct"];
+              const clean = ["nuclear", "solar", "wind", "nuclear_pct", "solar_pct", "wind_pct"];
 
-    const isMWh = payload[0].name.includes("pct") === false;
+              const isMWh = payload[0].name.includes("pct") === false;
 
-    const format = (val) =>
-      isMWh ? `${(val / 1_000_000).toFixed(2)} MWh` : `${(val * 100).toFixed(1)}%`;
+              const format = (val) =>
+                isMWh ? `${val.toFixed(1)} TWh` : `${(val * 100).toFixed(1)}%`;
 
-    const section = (title, keys) => {
-      const items = payload.filter(p => keys.includes(p.name));
-      if (!items.length) return null;
-      return (
-        <>
-          <div style={{ fontWeight: 600, color: "#555", marginTop: 6 }}>{title}</div>
-          {items.map(({ name, value, color }) => (
-            <div key={name} style={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
-              <span style={{
-                width: 12,
-                height: 12,
-                backgroundColor: color,
-                display: "inline-block",
-                marginRight: 6,
-                borderRadius: 2
-              }} />
-              <span style={{ flex: 1, color: "#333" }}>{name.replace("_pct", "")}</span>
-              <span style={{ fontWeight: 500 }}>{format(value)}</span>
-            </div>
-          ))}
-        </>
-      );
-    };
+              const section = (title, keys) => {
+                const items = payload.filter((p) => keys.includes(p.name));
+                if (!items.length) return null;
+                return (
+                  <>
+                    <div style={{ fontWeight: 600, color: "#555", marginTop: 6 }}>{title}</div>
+                    {items.map(({ name, value, color }) => (
+                      <div
+                        key={name}
+                        style={{ display: "flex", alignItems: "center", marginBottom: 2 }}
+                      >
+                        <span
+                          style={{
+                            width: 12,
+                            height: 12,
+                            backgroundColor: color,
+                            display: "inline-block",
+                            marginRight: 6,
+                            borderRadius: 2,
+                          }}
+                        />
+                        <span style={{ flex: 1, color: "#333" }}>{name.replace("_pct", "")}</span>
+                        <span style={{ fontWeight: 500 }}>{format(value)}</span>
+                      </div>
+                    ))}
+                  </>
+                );
+              };
 
-    return (
-      <div style={{
-        background: "#fff",
-        padding: 12,
-        border: "1px solid #ccc",
-        borderRadius: 4,
-        fontSize: 13,
-        maxWidth: 220
-      }}>
-        <div style={{ fontWeight: "bold", marginBottom: 4 }}>{label}</div>
-        {section("Fossil Fuels", fossil)}
-        {section("Clean Energy", clean)}
-      </div>
-    );
-  }}
-/>
-
+              return (
+                <div
+                  style={{
+                    background: "#fff",
+                    padding: 12,
+                    border: "1px solid #ccc",
+                    borderRadius: 4,
+                    fontSize: 13,
+                    maxWidth: 220,
+                  }}
+                >
+                  <div style={{ fontWeight: "bold", marginBottom: 4 }}>{label}</div>
+                  {section("Fossil Fuels", fossil)}
+                  {section("Clean Energy", clean)}
+                </div>
+              );
+            }}
+          />
 
           <Legend />
 
