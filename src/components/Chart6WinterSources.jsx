@@ -48,7 +48,7 @@ export default function Chart6SeasonalTabs() {
   const [tab, setTab] = useState(0);
 
   useEffect(() => {
-    Papa.parse("/data/chart6_winter_sources.csv", {
+    Papa.parse("/data/winter_summer.csv", {
       header: true,
       download: true,
       dynamicTyping: false,
@@ -180,7 +180,7 @@ export default function Chart6SeasonalTabs() {
 
   return (
     <Box>
-      <Typography variant="h6" mb={1}>Chart 6 – Seasonal Electricity Generation</Typography>
+      <Typography variant="h6" mb={1}>Seasonal Electricity Generation</Typography>
       <p>Solar drops in winter (e.g., 1,400,000 MWh in Q4 2023), while Gas dominates (e.g., 18,000,000 MWh) and Wind slightly rises.</p>
       <Tabs value={tab} onChange={(_, val) => setTab(val)}>
         <Tab label="Winter (Q4 → Q1)" />

@@ -90,7 +90,7 @@ export default function Chart2FossilToClean() {
   return (
     <Box sx={{ mb: 6 }}>
       <Typography variant="h6" mb={1}>
-        Chart 2 – Fossil to Clean Electricity Mix
+        Fossil to Clean Electricity Mix
       </Typography>
       <p>Coal declines to ~28.8 TWh in 2023, while clean energy nears 40% by 2024, driven by Solar and Wind growth.</p>
 

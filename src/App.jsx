@@ -30,15 +30,17 @@ const App = () => (
 
     <Card variant="outlined" sx={{ mb: 8 }}>
         <CardContent>
-            <Chart7 />
+            <Chart1ForecastWithToggle />
         </CardContent>
     </Card>
 
     <Card variant="outlined" sx={{ mb: 8 }}>
         <CardContent>
-            <Chart1ForecastWithToggle />
+            <Chart7 />
         </CardContent>
     </Card>
+
+  
     
 
   </Container>
